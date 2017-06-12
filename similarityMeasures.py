@@ -4,12 +4,12 @@ from dbConn.db import Connect
 from autoAnswer.nlp import TextMining, RakeTags, WordNet
 
 class GetRecommendation:
-	def on_get(self, req, res):
+	def on_post(self, req, res):
 		tm = TextMining()
 		rt = RakeTags()
 		wn = WordNet()
-		# text = input('Enter question: ')
-		text = 'There is hardware erroneously regard the headset as attached at all times jack port. Make calls without headset or speaker mode.'
+		body = json.loads(req.stream.read())
+		text = body['question']
 		tmResult = tm.generate(text)
 		rtResult = rt.generate(text, True)
 
@@ -37,10 +37,10 @@ class GetRecommendation:
 			})
 
 		result = sorted(result, key = lambda x: x['similarity'], reverse = True)
-	
+		print('hello')
 		question = {
 			'target': text,
-			'result': result
+			'result': result,
 		}
 
 		res.body = json.dumps(question)
