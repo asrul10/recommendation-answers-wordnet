@@ -11,9 +11,9 @@ sql.execute("""SELECT id, score, content, tags FROM question LIMIT %s OFFSET %s"
 i = 1
 count = sql.rowcount
 for id, score, content, tags in sql.fetchall():
-	print("Progress : %.2f %%" % float(format((float(i)/count)*100)), end = "\r")
-	content = content.replace('\n', "")
-	sql.execute("UPDATE question SET tags = %s WHERE id = %s", (rt.generate(content), id))
-	db.commit()
-	i += 1
+    print("Progress : %.2f %%" % float(format((float(i)/count)*100)), end = "\r")
+    content = content.replace('\n', "")
+    sql.execute("UPDATE question SET tags = %s WHERE id = %s", (rt.generate(content), id))
+    db.commit()
+    i += 1
 print('Progress : Complete')
