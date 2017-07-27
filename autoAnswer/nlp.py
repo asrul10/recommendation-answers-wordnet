@@ -20,10 +20,11 @@ class TagsStripper(HTMLParser): # Strip HTML Tags
 class RakeTags(): # Rapid Automatic Keyword Extraction
 	def generate(self, text, array = False):
 		rake = Rake()
-		tm = TextMining()
-		text = tm.tokenizing(tm.stripTags(text))
-		text = tm.stem(text)
-		rake.extract_keywords_from_text(' '.join(text))
+		# tm = TextMining()
+		# text = tm.tokenizing(tm.stripTags(text))
+		# text = tm.stem(text)
+		# rake.extract_keywords_from_text(' '.join(text))
+		rake.extract_keywords_from_text(text)
 		if array:
 			return rake.get_ranked_phrases()[:10]
 		else:
@@ -111,5 +112,8 @@ class WordNet():
 				score += best_score
 				count += 1
 		# Average the values
-		score /= count
+		if count:
+			score /= count
+		else:
+			score = 0
 		return score
